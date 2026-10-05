@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Performance Analysis — Aims & Objectives</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:        #0A0F1E;
+    --ink-soft:   #2D3554;
+    --paper:      #F7F5F0;
+    --paper-dark: #EDEAE2;
+    --gold:       #B8860B;
+    --gold-light: #D4A520;
+    --gold-pale:  #FDF6E3;
+    --accent-1:   #1A3A5C;   /* deep navy  — management */
+    --accent-2:   #1D5C3A;   /* deep green — academic   */
+    --accent-3:   #6B1D1D;   /* deep red   — risk       */
+    --accent-4:   #3B2A6E;   /* deep purple— student    */
+    --accent-5:   #1A4D4D;   /* deep teal  — faculty    */
+    --accent-7:   #7A1F4B;   /* deep plum  — student self-service */
+    --rule:       rgba(10,15,30,0.12);
+    --shadow-sm:  0 2px 8px rgba(10,15,30,0.08);
+    --shadow-md:  0 6px 24px rgba(10,15,30,0.12);
+    --shadow-lg:  0 16px 48px rgba(10,15,30,0.16);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.4;
+  }
+
+  /* ── HEADER HERO ── */
+  .hero {
+    position: relative;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 60px 64px;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 480px; height: 480px;
+    background: radial-gradient(circle, rgba(184,134,11,0.18) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -80px; left: 20%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(26,58,92,0.5) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px;
+    background: var(--gold-light);
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 62px);
+    font-weight: 900; line-height: 1.08;
+    letter-spacing: -1px; margin-bottom: 12px;
+  }
+  .hero h1 span { color: var(--gold-light); }
+  .hero-subtitle {
+    font-size: 15px; font-weight: 300;
+    color: rgba(247,245,240,0.65); max-width: 580px;
+    line-height: 1.8; margin-bottom: 40px; margin-top: 12px;
+  }
+
+  /* STAT PILLS */
+  .stat-row { display: flex; flex-wrap: wrap; gap: 12px; }
+  .stat-pill {
+    background: rgba(247,245,240,0.07);
+    border: 1px solid rgba(247,245,240,0.14);
+    border-radius: 6px; padding: 10px 20px;
+    display: flex; flex-direction: column; gap: 2px;
+    backdrop-filter: blur(4px);
+  }
+  .stat-pill .num {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--gold-light); line-height: 1;
+  }
+  .stat-pill .lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 9.5px; letter-spacing: 1.5px;
+    text-transform: uppercase; color: rgba(247,245,240,0.5);
+  }
+
+  /* ── PAGE NAV ── */
+  .page-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(247,245,240,0.94);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 60px;
+  }
+  .page-nav ul {
+    display: flex; gap: 0; list-style: none;
+    max-width: 960px; margin: 0 auto; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .page-nav ul::-webkit-scrollbar { display: none; }
+  .page-nav li a {
+    display: block; padding: 14px 18px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10.5px; letter-spacing: 1.5px; text-transform: uppercase;
+    color: var(--ink-soft); text-decoration: none; white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .page-nav li a:hover { color: var(--ink); border-color: var(--gold); }
+
+  /* ── MAIN LAYOUT ── */
+  .main { max-width: 1020px; margin: 0 auto; padding: 0 40px 100px; }
+
+  /* ── PREAMBLE ── */
+  .preamble {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--rule);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 48px;
+    align-items: start;
+  }
+  .preamble-left {}
+  .preamble h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px; font-weight: 700; margin-bottom: 16px;
+    color: var(--ink);
+  }
+  .preamble p { font-size: 14.5px; color: var(--ink-soft); margin-bottom: 12px; }
+  .preamble-right {}
+  .problem-box {
+    background: var(--ink); color: var(--paper);
+    border-radius: 12px; padding: 32px;
+    position: relative; overflow: hidden;
+  }
+  .problem-box::before {
+    content: '"'; position: absolute; top: -20px; left: 20px;
+    font-family: 'Playfair Display', serif;
+    font-size: 160px; color: rgba(184,134,11,0.15);
+    line-height: 1; pointer-events: none;
+  }
+  .problem-box h3 {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 16px;
+  }
+  .problem-box p {
+    font-size: 14px; line-height: 1.8;
+    color: rgba(247,245,240,0.8);
+    position: relative; z-index: 1;
+  }
+
+  /* ── SECTION BLOCKS ── */
+  .section-block {
+    padding: 64px 0 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .section-block:last-of-type { border-bottom: none; }
+
+  .section-header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 24px;
+    align-items: start;
+    margin-bottom: 40px;
+  }
+  .section-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 72px; font-weight: 900; line-height: 0.9;
+    color: var(--paper-dark); letter-spacing: -3px;
+    user-select: none; margin-top: -8px;
+  }
+  .section-meta { padding-top: 6px; }
+  .section-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 4px; display: inline-block;
+    margin-bottom: 10px; font-weight: 500;
+  }
+  .section-meta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .section-meta .section-desc {
+    font-size: 13.5px; color: var(--ink-soft);
+    max-width: 600px; line-height: 1.7;
+  }
+
+  /* DASHBOARD BADGE */
+  .dashboard-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
+    font-weight: 500; margin-bottom: 24px;
+    border: 1px solid currentColor;
+  }
+  .dashboard-badge::before { content: '▸'; font-size: 10px; }
+
+  /* OBJECTIVE CARDS GRID */
+  .obj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  .obj-card {
+    background: white;
+    border-radius: 10px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    border-left: 4px solid transparent;
+    position: relative;
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .obj-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .obj-card-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .obj-card-num::after {
+    content: ''; flex: 1; height: 1px;
+    background: var(--rule);
+  }
+  .obj-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 600;
+    margin-bottom: 8px; line-height: 1.35;
+  }
+  .obj-card p {
+    font-size: 13px; color: var(--ink-soft);
+    line-height: 1.65;
+  }
+  .obj-card .kpi-tag {
+    margin-top: 14px;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px; letter-spacing: 1px;
+    text-transform: uppercase; color: inherit;
+    opacity: 0.65;
+  }
+
+  /* PROBLEM ROW */
+  .problem-row {
+    background: var(--gold-pale);
+    border: 1px solid rgba(184,134,11,0.2);
+    border-radius: 10px; padding: 20px 24px;
+    margin-bottom: 28px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .problem-icon {
+    font-size: 20px; flex-shrink: 0; margin-top: 2px;
+  }
+  .problem-row h4 {
+    font-size: 13.5px; font-weight: 600; margin-bottom: 4px;
+    color: var(--ink);
+  }
+  .problem-row p { font-size: 13px; color: var(--ink-soft); }
+
+  /* COLOR THEMES PER SECTION */
+  .s1 { --accent: var(--accent-1); --accent-pale: #EBF0F7; }
+  .s2 { --accent: var(--accent-2); --accent-pale: #EBF5EF; }
+  .s3 { --accent: var(--accent-3); --accent-pale: #F7EBEB; }
+  .s4 { --accent: var(--accent-4); --accent-pale: #F0EBF7; }
+  .s5 { --accent: var(--accent-5); --accent-pale: #EBF5F5; }
+  .s6 { --accent: var(--gold);     --accent-pale: var(--gold-pale); }
+  .s7 { --accent: var(--accent-7); --accent-pale: #F7EAF0; }
+
+  .section-tag { background: var(--accent-pale); color: var(--accent); }
+  .dashboard-badge { color: var(--accent); border-color: var(--accent); }
+  .obj-card { border-left-color: var(--accent); }
+  .obj-card-num { color: var(--accent); }
+  .section-number { color: var(--accent-pale); }
+
+  /* ── AUDIENCE MATRIX ── */
+  .audience-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px; margin-top: 20px;
+  }
+  .audience-card {
+    text-align: center; padding: 20px 12px;
+    background: white; border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+  }
+  .audience-card .icon { font-size: 28px; margin-bottom: 10px; }
+  .audience-card h4 { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .audience-card p { font-size: 11.5px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* ── CONTACT ── */
+  .contact {
+    background: var(--ink); color: var(--paper);
+    padding: 72px 60px 56px;
+    position: relative; overflow: hidden;
+  }
+  .contact::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(184,134,11,0.16) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+  .contact-inner { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; }
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .contact-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px;
+    background: var(--gold-light);
+  }
+  .contact h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 700; margin-bottom: 36px;
+  }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(247,245,240,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .contact-cell {
+    background: rgba(10,15,30,0.4);
+    padding: 28px 28px;
+  }
+  .contact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 10px;
+  }
+  .contact-value a {
+    color: var(--paper); text-decoration: none;
+    font-size: 15px; font-weight: 500;
+    border-bottom: 1px solid rgba(247,245,240,0.25);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .contact-value a:hover { color: var(--gold-light); border-color: var(--gold-light); }
+  .social-row { display: flex; gap: 10px; margin-top: 2px; }
+  .social-link {
+    display: flex; align-items: center; justify-content: center;
+    width: 38px; height: 38px; border-radius: 50%;
+    border: 1px solid rgba(247,245,240,0.3);
+    color: var(--paper); text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+    flex-shrink: 0;
+  }
+  .social-link:hover {
+    background: var(--gold-light); border-color: var(--gold-light);
+    color: var(--ink); transform: translateY(-2px);
+  }
+  .social-link svg { width: 17px; height: 17px; fill: currentColor; }
+  @media (max-width: 768px) {
+    .contact { padding: 48px 24px 40px; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--ink); color: rgba(247,245,240,0.5);
+    padding: 40px 60px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px; letter-spacing: 1px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 12px;
+    border-top: 1px solid rgba(247,245,240,0.08);
+  }
+  .footer span { color: var(--gold-light); }
+
+  /* ── DIVIDER RULE ── */
+  .gold-rule {
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light), transparent);
+    margin: 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .hero { padding: 48px 24px 40px; }
+    .main { padding: 0 24px 80px; }
+    .preamble { grid-template-columns: 1fr; }
+    .audience-grid { grid-template-columns: repeat(2,1fr); }
+    .page-nav { padding: 0 24px; }
+  }
+
+  /* PRINT */
+  @media print {
+    .page-nav { display: none; }
+    .obj-card:hover { transform: none; box-shadow: var(--shadow-sm); }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero-inner > * {
+    animation: fadeUp 0.7s ease both;
+  }
+  .hero-eyebrow { animation-delay: 0.1s; }
+  .hero h1      { animation-delay: 0.2s; }
+  .hero-subtitle{ animation-delay: 0.3s; }
+  .stat-row     { animation-delay: 0.4s; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Science University · First Semester · 2025 Academic Session</div>
+    <h1>Student Performance<br><span>Analysis Framework</span></h1>
+    <p class="hero-subtitle">
+      A comprehensive analytical blueprint defining the aims, objectives, problem statements,
+      and dashboard scope for institutional decision-making across all levels of university
+      governance — extending from executive and faculty intelligence down to a secure,
+      personalized self-service view for every individual student.
+    </p>
+    <div class="stat-row">
+      <div class="stat-pill"><span class="num">28,810</span><span class="lbl">Students</span></div>
+      <div class="stat-pill"><span class="num">5</span><span class="lbl">Faculties</span></div>
+      <div class="stat-pill"><span class="num">30</span><span class="lbl">Departments</span></div>
+      <div class="stat-pill"><span class="num">713</span><span class="lbl">Course Codes</span></div>
+      <div class="stat-pill"><span class="num">233,017</span><span class="lbl">Score Records</span></div>
+      <div class="stat-pill"><span class="num">19.5%</span><span class="lbl">Overall Fail Rate</span></div>
+    </div>
+  </div>
+</header>
+<div class="gold-rule"></div>
+
+<!-- STICKY NAV -->
+<nav class="page-nav">
+  <ul>
+    <li><a href="#preamble">Overview</a></li>
+    <li><a href="#s1">§1 Institutional</a></li>
+    <li><a href="#s2">§2 Academic Quality</a></li>
+    <li><a href="#s3">§3 Risk & Intervention</a></li>
+    <li><a href="#s4">§4 Student Outcomes</a></li>
+    <li><a href="#s5">§5 Faculty & Dept</a></li>
+    <li><a href="#s6">§6 Strategic Planning</a></li>
+    <li><a href="#s7">§7 Student Portal</a></li>
+  </ul>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- PREAMBLE -->
+  <section class="preamble" id="preamble">
+    <div class="preamble-left">
+      <h2>Background &amp; Purpose</h2>
+      <p>
+        This analysis examines the first-semester academic performance of <strong>28,810 students</strong>
+        enrolled across 5 faculties and 30 departments of a science-based university. Covering
+        Levels 100 through 500 and 713 distinct course codes, it represents one of the most
+        granular institutional performance datasets assembled for a Nigerian university setting.
+      </p>
+      <p>
+        The overarching aim is to transform raw student score records into structured,
+        actionable intelligence — enabling the university management, faculty leadership,
+        departmental administrators, and individual students to make evidence-based decisions
+        that improve academic outcomes, reduce failure rates, and optimise resource allocation.
+      </p>
+      <p>
+        Each section below defines a thematic cluster of objectives, the specific problems
+        it targets, and the dashboard it should power.
+      </p>
+
+      <div style="margin-top:32px;">
+        <h3 style="font-family:'Playfair Display',serif; font-size:17px; margin-bottom:16px;">Primary Audiences</h3>
+        <div class="audience-grid">
+          <div class="audience-card">
+            <div class="icon">🏛️</div>
+            <h4>University Management</h4>
+            <p>Vice-Chancellor, Registrar, Senate, Academic Board</p>
+          </div>
+          <div class="audience-card">
+            <div class="icon">🎓</div>
+            <h4>Faculty Leadership</h4>
+            <p>Deans, Associate Deans, Faculty Boards</p>
+          </div>
+          <div class="audience-card">
+            <div class="icon">📋</div>
+            <h4>Departments</h4>
+            <p>HODs, Exam Officers, Course Lecturers</p>
+          </div>
+          <div class="audience-card">
+            <div class="icon">👤</div>
+            <h4>Students</h4>
+            <p>Secure, personalized self-service via Dashboard 7</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preamble-right">
+      <div class="problem-box">
+        <h3>The Core Problem</h3>
+        <p>
+          Nigerian universities routinely generate vast volumes of student performance data every
+          semester — yet the majority of this data remains locked in spreadsheets, result sheets,
+          and departmental records, never analysed beyond computing GPA and printing transcripts.
+        </p>
+        <p style="margin-top:14px;">
+          Institutional decisions on staffing, curriculum review, and student support are therefore
+          made without evidence. Failure rates remain persistently high. At-risk students go
+          undetected until it is too late. High-performing departments go unrecognised.
+          Bottleneck courses that consistently drag down GPAs across multiple departments
+          are never identified or restructured.
+        </p>
+        <p style="margin-top:14px;">
+          This analysis exists to close that gap — converting 233,017 student-course performance
+          records into structured dashboards that give every stakeholder, from the Vice-Chancellor
+          to the individual student, a clear, real-time view of what is happening academically
+          and what action is required.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 1 — INSTITUTIONAL OVERVIEW
+  ════════════════════════════════════════ -->
+  <section class="section-block s1" id="s1">
+    <div class="section-header">
+      <div class="section-number">01</div>
+      <div class="section-meta">
+        <span class="section-tag">Institutional Governance</span>
+        <h2>University-Wide Performance Overview</h2>
+        <p class="section-desc">
+          Provides the Vice-Chancellor, Senate, and Academic Board with a single, authoritative
+          snapshot of institutional academic health across all faculties, levels, and student
+          demographics for the first semester.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">⚠️</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Senior management currently lacks a consolidated view of academic performance
+        across the institution. Reports from each faculty arrive in different formats,
+        at different times, making cross-faculty benchmarking and Senate-level decisions
+        almost impossible without weeks of manual compilation.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 1 — Executive Overview</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.1</div>
+        <h4>Institutional GPA Distribution</h4>
+        <p>Establish the university-wide distribution of student GPAs on the 5.0 scale,
+        identifying the proportion of students in each class of degree — First Class (9.0%),
+        Second Upper (20.9%), Second Lower (26.3%), Third Class (16.6%), Pass (7.8%),
+        and Fail (19.5%).</p>
+        <div class="kpi-tag">KPI → Class of Degree % by Total Enrolment</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.2</div>
+        <h4>Faculty Performance Benchmarking</h4>
+        <p>Compare average GPA and class distribution across all 5 faculties to identify
+        which faculty leads academically (FBS avg GPA: 2.76) and which requires the most
+        immediate intervention (FET avg GPA: 2.31).</p>
+        <div class="kpi-tag">KPI → Avg GPA · Fail Rate · 1st Class Rate per Faculty</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.3</div>
+        <h4>Gender Performance Analysis</h4>
+        <p>Examine whether significant GPA disparities exist between male (59.1%) and
+        female (40.9%) student populations university-wide and within each faculty,
+        to inform equity and support policy decisions.</p>
+        <div class="kpi-tag">KPI → GPA · Grade Distribution by Gender</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.4</div>
+        <h4>Enrolment & Attrition Profile</h4>
+        <p>Map student population across the 5 levels — from L100 (6,750) down to L500
+        (4,825) — to quantify the 28.5% student reduction across levels and understand
+        whether attrition is uniform or concentrated at specific transition points.</p>
+        <div class="kpi-tag">KPI → Student Count per Level · Attrition Rate</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.5</div>
+        <h4>Year-of-Entry Cohort Tracking</h4>
+        <p>Link each level to its year of entry (L100=2025, L500=2021) to enable cohort
+        analysis — tracking whether the 2021 intake is performing better or worse than
+        earlier cohorts at the same stage of their degree programme.</p>
+        <div class="kpi-tag">KPI → Avg GPA · Fail Rate by Year of Entry</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 1.6</div>
+        <h4>Score Variability Across the Institution</h4>
+        <p>Measure the spread and standard deviation of individual course scores across
+        the institution to determine whether the university has a healthy distribution
+        of high, middle, and low performers, or whether scores cluster unnaturally.</p>
+        <div class="kpi-tag">KPI → Score Distribution Histogram · Std Dev by Faculty</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 2 — ACADEMIC QUALITY
+  ════════════════════════════════════════ -->
+  <section class="section-block s2" id="s2">
+    <div class="section-header">
+      <div class="section-number">02</div>
+      <div class="section-meta">
+        <span class="section-tag">Academic Quality & Curriculum</span>
+        <h2>Course-Level Performance &amp; Curriculum Effectiveness</h2>
+        <p class="section-desc">
+          Evaluates the academic quality and effectiveness of individual courses and
+          curricula at the department level, helping HODs and course lecturers identify
+          which courses are well-calibrated and which are persistently problematic.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">📚</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Course lecturers and department heads have no visibility into how their specific
+        courses compare to others within the faculty. A course with a 34% failure rate
+        (e.g. ABE207) may run for multiple semesters without anyone recognising the pattern,
+        because results are reviewed in isolation rather than comparatively across the department.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 2 — Course & Curriculum Analysis</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.1</div>
+        <h4>Course Failure Rate Ranking</h4>
+        <p>Rank all 713 course codes by failure rate to surface the highest-risk courses
+        across the university. Courses such as ABE207 (34.0%), PHY201 (32.4%), and
+        CSC209 (31.7%) warrant immediate curriculum or pedagogy review.</p>
+        <div class="kpi-tag">KPI → Fail % per Course Code · Ranked List</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.2</div>
+        <h4>Average Score by Course &amp; Department</h4>
+        <p>Compute mean scores for every course within each department to distinguish
+        genuinely difficult courses from those where poor performance reflects delivery
+        issues, inadequate prerequisites, or assessment misalignment.</p>
+        <div class="kpi-tag">KPI → Avg Score · Score Distribution per Course</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.3</div>
+        <h4>Cross-Departmental Shared Course Analysis</h4>
+        <p>Examine how shared courses (e.g. MTH101, GST101 taken by all L100 students)
+        perform differently across departments and faculties — revealing whether poor
+        scores in shared courses are universal or department-specific.</p>
+        <div class="kpi-tag">KPI → Avg Score in Shared Course by Dept/Faculty</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.4</div>
+        <h4>Grade Distribution per Course</h4>
+        <p>Visualise the A-B-C-D-E-F grade distribution for each course to understand
+        whether courses are appropriately discriminating between ability levels or
+        producing a disproportionate number of failures or near-perfect scores.</p>
+        <div class="kpi-tag">KPI → Grade Distribution Bar Chart per Course</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.5</div>
+        <h4>Credit Unit Load vs. Performance Correlation</h4>
+        <p>Determine whether higher credit-unit courses (3-unit vs 2-unit) correlate
+        with lower student scores, to inform decisions about course load restructuring
+        and whether heavy-unit courses need additional contact hours.</p>
+        <div class="kpi-tag">KPI → Avg Score by Credit Unit Load</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 2.6</div>
+        <h4>Semester Curriculum Completeness Audit</h4>
+        <p>Verify that every department-level combination has the expected number of
+        courses registered in the first semester, and that total credit unit loads
+        are consistent with JAMB/NUC minimum standards (typically 18–24 units per semester).</p>
+        <div class="kpi-tag">KPI → Course Count · Total Units per Dept-Level</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 3 — RISK & EARLY INTERVENTION
+  ════════════════════════════════════════ -->
+  <section class="section-block s3" id="s3">
+    <div class="section-header">
+      <div class="section-number">03</div>
+      <div class="section-meta">
+        <span class="section-tag">Risk Detection &amp; Early Intervention</span>
+        <h2>At-Risk Student Identification &amp; Failure Pattern Analysis</h2>
+        <p class="section-desc">
+          Identifies students and groups most at risk of academic failure or withdrawal,
+          enabling the Student Affairs unit, departmental advisors, and counsellors
+          to intervene before the second semester begins.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">🚨</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>5,607 students (19.5% of the university population) are currently classified as
+        having failed this semester. Without a structured identification and tracking mechanism,
+        a significant portion of these students will carry over courses without receiving
+        academic counselling, increasing their likelihood of eventual withdrawal or expulsion.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 3 — Risk & Intervention Monitor</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.1</div>
+        <h4>At-Risk Student Identification</h4>
+        <p>Flag all students with a GPA below 1.0 (Fail classification) or who have
+        failed 3 or more courses in a single semester, producing a priority intervention
+        list for academic advisors, broken down by department and level.</p>
+        <div class="kpi-tag">KPI → Count of Fail Students · Failed Course Load Distribution</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.2</div>
+        <h4>Failure Concentration by Level</h4>
+        <p>Determine whether academic failure is disproportionately concentrated at
+        Level 100 (first-year transition risk) versus upper levels, to guide where
+        academic support programmes — orientation, tutoring, mentorship — should
+        be targeted most urgently.</p>
+        <div class="kpi-tag">KPI → Fail Rate % by Academic Level</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.3</div>
+        <h4>High-Failure Departments</h4>
+        <p>Rank all 30 departments by percentage of students who failed the semester
+        outright (GPA &lt; 1.0), identifying departments like Agricultural &amp; Bioresources
+        Engineering where structural or pedagogical issues may be systemic rather than
+        individual student factors.</p>
+        <div class="kpi-tag">KPI → Dept Failure Rate Ranking · Heatmap</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.4</div>
+        <h4>Borderline Student Tracking</h4>
+        <p>Identify students whose GPA falls in the 1.0–1.5 range (Pass class) —
+        the population most at risk of dropping into Fail in semester 2. Tracking
+        this group enables preventive intervention rather than reactive response.</p>
+        <div class="kpi-tag">KPI → Count of Pass-Class Students per Dept</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.5</div>
+        <h4>Gender as a Risk Factor</h4>
+        <p>Analyse whether failure rates differ significantly between male and female
+        students within the same department and level — to determine whether gender-specific
+        support mechanisms (e.g. female STEM mentorship programmes) are warranted.</p>
+        <div class="kpi-tag">KPI → Fail Rate by Gender · Department Breakdown</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 3.6</div>
+        <h4>Multi-Course Failure Pattern Detection</h4>
+        <p>Identify students failing 4 or more courses simultaneously — a pattern
+        strongly associated with personal crises, health issues, or severe academic
+        unpreparedness — to prioritise urgent welfare and counselling referrals.</p>
+        <div class="kpi-tag">KPI → Distribution of Courses Failed per Student</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 4 — STUDENT OUTCOMES
+  ════════════════════════════════════════ -->
+  <section class="section-block s4" id="s4">
+    <div class="section-header">
+      <div class="section-number">04</div>
+      <div class="section-meta">
+        <span class="section-tag">Student Performance &amp; Outcomes</span>
+        <h2>Individual &amp; Cohort Student Achievement Analysis</h2>
+        <p class="section-desc">
+          Examines the academic performance of students as individuals and as cohorts,
+          enabling students to benchmark themselves and giving departments the ability
+          to track high-achievers alongside struggling students.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">🎯</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Students receive their results but have no reference point for understanding
+        how their performance compares to their peers in the same department, level,
+        or faculty. First Class students (9.0%) are rarely recognised early enough to
+        receive scholarship or research opportunities, while the bottom performers receive
+        no structured feedback on which specific courses dragged their GPA down.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 4 — Student Achievement Profile</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.1</div>
+        <h4>GPA Distribution &amp; Percentile Ranking</h4>
+        <p>Generate a full GPA distribution curve per department and level, enabling
+        any student to understand their percentile rank — whether they sit in the
+        top 10%, median, or bottom quartile of their cohort.</p>
+        <div class="kpi-tag">KPI → GPA Percentile Curve · Dept Median GPA</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.2</div>
+        <h4>First Class &amp; High-Achiever Identification</h4>
+        <p>Identify all 2,590 First Class students (GPA ≥ 4.5) broken down by department,
+        level, gender, and faculty — to support early identification for scholarships,
+        awards, academic prizes, and research assistant positions.</p>
+        <div class="kpi-tag">KPI → First Class Count · % by Dept · Gender Split</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.3</div>
+        <h4>Subject Strength &amp; Weakness Profiling</h4>
+        <p>For any student or student group, identify which specific courses contributed
+        most to GPA elevation or depression — enabling targeted advice about where
+        to focus remedial effort in semester 2 or during carry-over retakes.</p>
+        <div class="kpi-tag">KPI → Score Variance Across Courses per Student</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.4</div>
+        <h4>Class of Degree Transition Analysis</h4>
+        <p>Map how GPA distributions shift from L100 to L500 — determining whether
+        students who start strong in L100 tend to maintain their standing, and whether
+        upper-level courses create a downward pressure on previously high-performing students.</p>
+        <div class="kpi-tag">KPI → Avg GPA Trend by Level · Class Mobility Rate</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.5</div>
+        <h4>Departmental GPA Benchmarks</h4>
+        <p>Publish department-specific GPA benchmarks (top quartile, median, bottom quartile)
+        so students can self-assess realistically within the context of their own programme's
+        difficulty level — avoiding misleading cross-faculty comparisons.</p>
+        <div class="kpi-tag">KPI → Q1/Median/Q3 GPA per Department</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 4.6</div>
+        <h4>Score Consistency Index</h4>
+        <p>Measure the consistency of each student's performance across their courses
+        (using standard deviation of individual course scores) to distinguish students
+        who are uniformly strong from those with extreme peaks and troughs that
+        mask their true potential or weakness.</p>
+        <div class="kpi-tag">KPI → Score Std Dev per Student · Consistency Distribution</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 5 — FACULTY & DEPARTMENT
+  ════════════════════════════════════════ -->
+  <section class="section-block s5" id="s5">
+    <div class="section-header">
+      <div class="section-number">05</div>
+      <div class="section-meta">
+        <span class="section-tag">Faculty &amp; Department Intelligence</span>
+        <h2>Faculty and Departmental Performance Diagnostics</h2>
+        <p class="section-desc">
+          Gives Deans, HODs, and exam officers deep comparative intelligence about
+          performance within and across their faculty — enabling informed decisions
+          about curriculum, staffing, and academic support at the departmental level.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">🏫</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Faculty of Engineering and Technology has the lowest average GPA (2.31) and the
+        highest course failure rates in the university, yet without granular department-level
+        disaggregation, the Dean cannot determine whether poor performance is isolated to
+        one department (e.g. Agricultural &amp; Bioresources Engineering) or is uniformly
+        distributed across all five engineering departments.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 5 — Faculty & Department Deep Dive</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.1</div>
+        <h4>Intra-Faculty Department Ranking</h4>
+        <p>Rank all departments within each faculty by average GPA, fail rate, and
+        First Class rate — enabling Deans to identify their strongest and weakest
+        departments and hold targeted departmental accountability conversations.</p>
+        <div class="kpi-tag">KPI → Dept Rank within Faculty · Avg GPA · Fail %</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.2</div>
+        <h4>Department Enrolment vs. Performance Correlation</h4>
+        <p>Test whether larger departments (e.g. Computer Science: 1,964 students)
+        perform differently from smaller departments (e.g. Genetics &amp; Biotechnology:
+        ~659 students) — to evaluate whether class size is a significant performance driver.</p>
+        <div class="kpi-tag">KPI → Enrolment Size vs. Avg GPA Scatter Plot</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.3</div>
+        <h4>Level-by-Level Department Trend</h4>
+        <p>Track how each department's average GPA changes from Level 100 through
+        Level 500 — revealing whether a department's students improve with progression
+        (as expected with survivorship) or deteriorate due to increasing course difficulty.</p>
+        <div class="kpi-tag">KPI → Avg GPA per Level per Department · Line Trend</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.4</div>
+        <h4>Faculty Gender Composition &amp; Performance</h4>
+        <p>Analyse the gender composition of each faculty (FET: 75% male, FHMS: 64% female)
+        alongside gender-disaggregated GPA outcomes — to assess whether gender composition
+        influences aggregate faculty performance metrics.</p>
+        <div class="kpi-tag">KPI → Gender Ratio vs. Avg GPA by Faculty</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.5</div>
+        <h4>Departmental Course Difficulty Profile</h4>
+        <p>Map the average difficulty of a department's course portfolio — using
+        mean score and failure rate per course — to quantify whether a department's
+        overall poor performance is driven by its curriculum design rather than
+        student intake quality.</p>
+        <div class="kpi-tag">KPI → Dept Course Difficulty Index · Heat Map</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 5.6</div>
+        <h4>Offering Department Cross-Impact Analysis</h4>
+        <p>Evaluate the performance of courses taught by one department but taken by
+        students in another (cross-listed courses) — to determine whether offering
+        departments are adequately calibrating their courses for non-specialist audiences.</p>
+        <div class="kpi-tag">KPI → Avg Score in Cross-Listed Courses by Host vs. Guest Dept</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 6 — STRATEGIC PLANNING
+  ════════════════════════════════════════ -->
+  <section class="section-block s6" id="s6">
+    <div class="section-header">
+      <div class="section-number">06</div>
+      <div class="section-meta">
+        <span class="section-tag">Strategic Planning &amp; Policy</span>
+        <h2>Institutional Strategy, Resource Allocation &amp; Policy Development</h2>
+        <p class="section-desc">
+          Supports long-term strategic decision-making by the university Senate and
+          Governing Council — including NUC accreditation evidence, student welfare
+          policy, staffing decisions, and inter-faculty resource distribution.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">📊</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>NUC accreditation reviews, university strategic plans, and annual reports
+        currently rely on manually compiled statistics that are neither standardised
+        nor reproducible. Without a structured analytics framework, the university
+        cannot demonstrate evidence-based quality assurance to regulatory bodies,
+        cannot benchmark itself against peer institutions, and cannot make the
+        data-driven staffing or infrastructure investment decisions that improving
+        academic outcomes requires.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 6 — Strategic Intelligence & Planning</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.1</div>
+        <h4>NUC-Ready Performance Report</h4>
+        <p>Generate standardised performance metrics aligned to the National Universities
+        Commission (NUC) minimum academic standards — documenting First Class rates,
+        pass rates, and course completion rates in a format suitable for accreditation
+        and self-study reports.</p>
+        <div class="kpi-tag">KPI → NUC Benchmark Metrics · Compliance Status</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.2</div>
+        <h4>Faculty Resource Allocation Justification</h4>
+        <p>Use performance data to objectively justify differential resource allocation —
+        demonstrating that FET's higher failure rates (23.9%) support the case for
+        additional tutorial staff, laboratory resources, or remedial teaching investment
+        compared to FBS (14.4% fail rate).</p>
+        <div class="kpi-tag">KPI → Resource Need Index per Faculty vs. Performance Gap</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.3</div>
+        <h4>Curriculum Review Priority Matrix</h4>
+        <p>Build a priority matrix combining course failure rate, student enrolment size,
+        and credit unit weight to produce a ranked list of courses most urgently requiring
+        curriculum revision — giving the Academic Board a clear, evidence-based
+        curriculum review agenda.</p>
+        <div class="kpi-tag">KPI → Priority Score = Fail% × Enrolment × Units</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.4</div>
+        <h4>Student Retention Strategy Analysis</h4>
+        <p>Model the enrolment attrition from Level 100 (6,750) to Level 500 (4,825)
+        and identify at which level the steepest drop occurs — to determine where
+        student retention interventions (academic counselling, financial support,
+        mentorship programmes) will have the greatest impact.</p>
+        <div class="kpi-tag">KPI → Level-to-Level Retention Rate · Drop-off Points</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.5</div>
+        <h4>Gender Equity Performance Audit</h4>
+        <p>Produce a university-wide gender equity academic audit — examining whether
+        male and female students have equitable access to First Class outcomes, whether
+        STEM faculties show gender-based performance gaps, and whether targeted gender
+        equity policies are needed.</p>
+        <div class="kpi-tag">KPI → Gender GPA Gap · 1st Class Rate by Gender · Faculty</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 6.6</div>
+        <h4>Semester 2 Performance Forecast</h4>
+        <p>Use semester 1 GPA distributions as a baseline projection tool — identifying
+        which departments are likely to see the highest carry-over volumes in semester 2,
+        enabling proactive scheduling of supplementary examinations and additional
+        academic support resources before they are urgently needed.</p>
+        <div class="kpi-tag">KPI → Predicted Carry-Over Volume · Dept-Level Risk Rating</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       SECTION 7 — STUDENT SELF-SERVICE PORTAL
+  ════════════════════════════════════════ -->
+  <section class="section-block s7" id="s7">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-meta">
+        <span class="section-tag">Personalized Student Self-Service</span>
+        <h2>Individual Student Dashboard &amp; Secure Self-Service Portal</h2>
+        <p class="section-desc">
+          Extends the analysis beyond institutional reporting into a single, row-level-secured
+          dashboard that gives each of the 28,810 students a private, personalized view of
+          their own academic standing — architected to mirror how a real student-portal
+          integration would function.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">🔒</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Dashboards 1–6 serve management, faculty, and departmental audiences — but no
+        mechanism exists for an individual student to see where they personally stand without
+        requesting a transcript or waiting on an advisor. A student's percentile within their
+        department, their consistency across courses, and which specific courses are dragging
+        their GPA down all remain invisible to them, even though the underlying data already
+        exists. Any self-service view also has to guarantee that one student can never see
+        another student's results.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 7 — My Performance (Student Self-Service)</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.1</div>
+        <h4>Row-Level Secured Personal Access</h4>
+        <p>Architect the dashboard so each student, identified by a unique login credential
+        mapped to their matriculation number, can see only their own records — implemented via
+        Power BI Row-Level Security (RLS) with a dynamic <code>USERPRINCIPALNAME()</code> role
+        filter, the same security model used in real-world embedded student-portal integrations.</p>
+        <div class="kpi-tag">KPI → RLS Role Filter · Login-to-Matric Mapping</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.2</div>
+        <h4>My GPA &amp; Class of Degree Snapshot</h4>
+        <p>Display the logged-in student's current GPA and resulting class of degree on a
+        single card, colour-coded to the official classification bands (First Class through
+        Fail) — giving an instant, unambiguous read of standing the moment the dashboard opens.</p>
+        <div class="kpi-tag">KPI → Student_GPA · Class of Degree (Conditional Colour)</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.3</div>
+        <h4>Departmental Percentile Benchmarking</h4>
+        <p>Benchmark the student's GPA against their own department's quartile distribution
+        (Q1, median, Q3) via a gauge visual, and surface a plain-language percentile statement
+        ("Top 18% of your department") — context a raw GPA number alone cannot provide.</p>
+        <div class="kpi-tag">KPI → My_Percentile_In_Dept · Dept Q1/Median/Q3 GPA</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.4</div>
+        <h4>Personalized Course-by-Course Breakdown</h4>
+        <p>List every course the student sat, each scored against their own personal average
+        rather than the cohort average, and labelled a "Strength" or "Focus Area" — turning a
+        flat result sheet into a targeted, individual revision priority list.</p>
+        <div class="kpi-tag">KPI → Score_vs_My_Avg · Course_Impact_Label per Course</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.5</div>
+        <h4>Personal Score Consistency Index</h4>
+        <p>Calculate the standard deviation of the student's own course scores to tell them,
+        in plain language, whether their performance is steady across subjects or highly
+        variable — a signal that uneven preparation, rather than ability, may be masking their
+        true potential in certain courses.</p>
+        <div class="kpi-tag">KPI → My_Score_StdDev · Consistency Label</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.6</div>
+        <h4>Supportive Status &amp; Advising Trigger</h4>
+        <p>Translate the institutional Risk_Tier classification used in Dashboard 3 into
+        softened, student-facing language ("Keep an eye on this" rather than "High Risk") that
+        informs without alarming, and signals clearly when it's time to book academic advising.</p>
+        <div class="kpi-tag">KPI → My_Status_Label (Risk_Tier-derived, re-worded for tone)</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- CONTACT -->
+<section class="contact">
+  <div class="contact-inner">
+    <div class="contact-eyebrow">Prepared By</div>
+    <h2>Oluwole Damilola (Martins)</h2>
+    <div class="contact-grid">
+      <div class="contact-cell">
+        <div class="contact-label">Phone</div>
+        <div class="contact-value"><a href="tel:+2348130167876">0813 016 7876</a></div>
+      </div>
+      <div class="contact-cell">
+        <div class="contact-label">Email</div>
+        <div class="contact-value"><a href="mailto:Mhartins631@gmail.com">Mhartins631@gmail.com</a></div>
+      </div>
+      <div class="contact-cell">
+        <div class="contact-label">Connect</div>
+        <div class="social-row">
+          <a class="social-link" href="https://www.linkedin.com/in/oluwole-damilola-3352b6269?utm_source=share_via&utm_content=profile&utm_medium=member_android" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+          </a>
+          <a class="social-link" href="https://www.facebook.com/Mhartinsz" target="_blank" rel="noopener" aria-label="Facebook">
+            <svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9v-2.89h2.54V9.8c0-2.5 1.49-3.89 3.78-3.89 1.1 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56v1.87h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a class="social-link" href="https://instagram.com/oluwole_martinz?stkn=MWl4Y2ZzNjdpZnE3Zw%3D%3D" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.22.4.56.22.96.48 1.38.9.42.42.68.82.9 1.38.15.42.35 1.05.4 2.22.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.4 2.22a3.72 3.72 0 0 1-.9 1.38c-.42.42-.82.68-1.38.9-.42.15-1.05.35-2.22.4-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.22-.4a3.72 3.72 0 0 1-1.38-.9 3.72 3.72 0 0 1-.9-1.38c-.15-.42-.35-1.05-.4-2.22C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.4-2.22.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.15 1.05-.35 2.22-.4C8.42 2.17 8.8 2.16 12 2.16zm0 1.8c-3.14 0-3.5.01-4.73.07-.96.04-1.48.2-1.82.34-.46.18-.78.39-1.12.73-.34.34-.55.66-.73 1.12-.14.34-.3.86-.34 1.82-.06 1.23-.07 1.59-.07 4.73s.01 3.5.07 4.73c.04.96.2 1.48.34 1.82.18.46.39.78.73 1.12.34.34.66.55 1.12.73.34.14.86.3 1.82.34 1.23.06 1.59.07 4.73.07s3.5-.01 4.73-.07c.96-.04 1.48-.2 1.82-.34.46-.18.78-.39 1.12-.73.34-.34.55-.66.73-1.12.14-.34.3-.86.34-1.82.06-1.23.07-1.59.07-4.73s-.01-3.5-.07-4.73c-.04-.96-.2-1.48-.34-1.82a3 3 0 0 0-.73-1.12 3 3 0 0 0-1.12-.73c-.34-.14-.86-.3-1.82-.34-1.23-.06-1.59-.07-4.73-.07zm0 4.59a5.45 5.45 0 1 1 0 10.9 5.45 5.45 0 0 1 0-10.9zm0 1.8a3.65 3.65 0 1 0 0 7.3 3.65 3.65 0 0 0 0-7.3zm6.94-2a1.28 1.28 0 1 1-2.56 0 1.28 1.28 0 0 1 2.56 0z"/></svg>
+          </a>
+          <a class="social-link" href="https://x.com/Mhartins631" target="_blank" rel="noopener" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24"><path d="M18.9 2.9h3.1l-6.8 7.78L23.3 21.1h-6.56l-5.13-6.7-5.88 6.7H2.6l7.28-8.32L2 2.9h6.72l4.64 6.13L18.9 2.9zm-1.09 16.4h1.72L7.28 4.6H5.42l12.39 14.7z"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div class="gold-rule"></div>
+<footer class="footer">
+  <div>
+    <span>SCIENCE UNIVERSITY</span> · Student Performance Analysis ·
+    First Semester 2025 Academic Session
+  </div>
+  <div>
+    7 Dashboard Sections · 42 Core Objectives · 28,810 Students ·
+    Prepared for Portfolio Presentation
+  </div>
+</footer>
+
+</body>
+</html>
