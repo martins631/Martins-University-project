@@ -19,6 +19,7 @@
     --accent-3:   #6B1D1D;   /* deep red   — risk       */
     --accent-4:   #3B2A6E;   /* deep purple— student    */
     --accent-5:   #1A4D4D;   /* deep teal  — faculty    */
+    --accent-7:   #7A1F4B;   /* deep plum  — student self-service */
     --rule:       rgba(10,15,30,0.12);
     --shadow-sm:  0 2px 8px rgba(10,15,30,0.08);
     --shadow-md:  0 6px 24px rgba(10,15,30,0.12);
@@ -294,6 +295,7 @@
   .s4 { --accent: var(--accent-4); --accent-pale: #F0EBF7; }
   .s5 { --accent: var(--accent-5); --accent-pale: #EBF5F5; }
   .s6 { --accent: var(--gold);     --accent-pale: var(--gold-pale); }
+  .s7 { --accent: var(--accent-7); --accent-pale: #F7EAF0; }
 
   .section-tag { background: var(--accent-pale); color: var(--accent); }
   .dashboard-badge { color: var(--accent); border-color: var(--accent); }
@@ -446,7 +448,9 @@
     <h1>Student Performance<br><span>Analysis Framework</span></h1>
     <p class="hero-subtitle">
       A comprehensive analytical blueprint defining the aims, objectives, problem statements,
-      and dashboard scope for institutional decision-making across all levels of university governance.
+      and dashboard scope for institutional decision-making across all levels of university
+      governance — extending from executive and faculty intelligence down to a secure,
+      personalized self-service view for every individual student.
     </p>
     <div class="stat-row">
       <div class="stat-pill"><span class="num">28,810</span><span class="lbl">Students</span></div>
@@ -470,6 +474,7 @@
     <li><a href="#s4">§4 Student Outcomes</a></li>
     <li><a href="#s5">§5 Faculty & Dept</a></li>
     <li><a href="#s6">§6 Strategic Planning</a></li>
+    <li><a href="#s7">§7 Student Portal</a></li>
   </ul>
 </nav>
 
@@ -518,7 +523,7 @@
           <div class="audience-card">
             <div class="icon">👤</div>
             <h4>Students</h4>
-            <p>Individual tracking and self-improvement</p>
+            <p>Secure, personalized self-service via Dashboard 7</p>
           </div>
         </div>
       </div>
@@ -1057,6 +1062,94 @@
     </div>
   </section>
 
+  <!-- ════════════════════════════════════════
+       SECTION 7 — STUDENT SELF-SERVICE PORTAL
+  ════════════════════════════════════════ -->
+  <section class="section-block s7" id="s7">
+    <div class="section-header">
+      <div class="section-number">07</div>
+      <div class="section-meta">
+        <span class="section-tag">Personalized Student Self-Service</span>
+        <h2>Individual Student Dashboard &amp; Secure Self-Service Portal</h2>
+        <p class="section-desc">
+          Extends the analysis beyond institutional reporting into a single, row-level-secured
+          dashboard that gives each of the 28,810 students a private, personalized view of
+          their own academic standing — architected to mirror how a real student-portal
+          integration would function.
+        </p>
+      </div>
+    </div>
+
+    <div class="problem-row">
+      <div class="problem-icon">🔒</div>
+      <div>
+        <h4>Problem Statement</h4>
+        <p>Dashboards 1–6 serve management, faculty, and departmental audiences — but no
+        mechanism exists for an individual student to see where they personally stand without
+        requesting a transcript or waiting on an advisor. A student's percentile within their
+        department, their consistency across courses, and which specific courses are dragging
+        their GPA down all remain invisible to them, even though the underlying data already
+        exists. Any self-service view also has to guarantee that one student can never see
+        another student's results.</p>
+      </div>
+    </div>
+
+    <div class="dashboard-badge">Dashboard 7 — My Performance (Student Self-Service)</div>
+
+    <div class="obj-grid">
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.1</div>
+        <h4>Row-Level Secured Personal Access</h4>
+        <p>Architect the dashboard so each student, identified by a unique login credential
+        mapped to their matriculation number, can see only their own records — implemented via
+        Power BI Row-Level Security (RLS) with a dynamic <code>USERPRINCIPALNAME()</code> role
+        filter, the same security model used in real-world embedded student-portal integrations.</p>
+        <div class="kpi-tag">KPI → RLS Role Filter · Login-to-Matric Mapping</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.2</div>
+        <h4>My GPA &amp; Class of Degree Snapshot</h4>
+        <p>Display the logged-in student's current GPA and resulting class of degree on a
+        single card, colour-coded to the official classification bands (First Class through
+        Fail) — giving an instant, unambiguous read of standing the moment the dashboard opens.</p>
+        <div class="kpi-tag">KPI → Student_GPA · Class of Degree (Conditional Colour)</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.3</div>
+        <h4>Departmental Percentile Benchmarking</h4>
+        <p>Benchmark the student's GPA against their own department's quartile distribution
+        (Q1, median, Q3) via a gauge visual, and surface a plain-language percentile statement
+        ("Top 18% of your department") — context a raw GPA number alone cannot provide.</p>
+        <div class="kpi-tag">KPI → My_Percentile_In_Dept · Dept Q1/Median/Q3 GPA</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.4</div>
+        <h4>Personalized Course-by-Course Breakdown</h4>
+        <p>List every course the student sat, each scored against their own personal average
+        rather than the cohort average, and labelled a "Strength" or "Focus Area" — turning a
+        flat result sheet into a targeted, individual revision priority list.</p>
+        <div class="kpi-tag">KPI → Score_vs_My_Avg · Course_Impact_Label per Course</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.5</div>
+        <h4>Personal Score Consistency Index</h4>
+        <p>Calculate the standard deviation of the student's own course scores to tell them,
+        in plain language, whether their performance is steady across subjects or highly
+        variable — a signal that uneven preparation, rather than ability, may be masking their
+        true potential in certain courses.</p>
+        <div class="kpi-tag">KPI → My_Score_StdDev · Consistency Label</div>
+      </div>
+      <div class="obj-card">
+        <div class="obj-card-num">OBJ 7.6</div>
+        <h4>Supportive Status &amp; Advising Trigger</h4>
+        <p>Translate the institutional Risk_Tier classification used in Dashboard 3 into
+        softened, student-facing language ("Keep an eye on this" rather than "High Risk") that
+        informs without alarming, and signals clearly when it's time to book academic advising.</p>
+        <div class="kpi-tag">KPI → My_Status_Label (Risk_Tier-derived, re-worded for tone)</div>
+      </div>
+    </div>
+  </section>
+
 </main>
 
 <!-- CONTACT -->
@@ -1102,7 +1195,7 @@
     First Semester 2025 Academic Session
   </div>
   <div>
-    6 Dashboard Sections · 36 Core Objectives · 28,810 Students ·
+    7 Dashboard Sections · 42 Core Objectives · 28,810 Students ·
     Prepared for Portfolio Presentation
   </div>
 </footer>
